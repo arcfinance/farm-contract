@@ -257,7 +257,7 @@ contract LPMining is Ownable {
         }
         uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);
         uint256 reward = multiplier.mul(arcPerBlock).mul(pool.allocPoint).div(totalAllocPoint);
-        arc.safeTransfer(devaddr, reward.div(10));    // dev reward
+        arc.safeTransfer(devaddr, reward.div(5));    // dev reward
         // arc.safeTransfer(address(this), reward);     // TODO: have no syrup! 
         pool.accARCPerShare = pool.accARCPerShare.add(reward.mul(1e12).div(lpSupply));
         pool.lastRewardBlock = block.number;
