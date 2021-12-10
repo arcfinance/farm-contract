@@ -1,1 +1,1 @@
-farm&stake
+# ButterFly Mining

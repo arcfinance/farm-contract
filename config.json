@@ -1,0 +1,17 @@
+{
+  "main": "./contracts/BnbStaking.sol",
+  "deploy": "",
+  "framework": "truffle",
+  "npmClient": "yarn",
+  "compilers": {
+    "truffle": "v5.4.3",
+    "solc": "0.6.12",
+    "evmVersion": "istanbul"
+  },
+  "linter": "solhint",
+  "editor": {
+    "fontFamily": "Hack",
+    "fontSize": "13px",
+    "ligatures": false
+  }
+}
