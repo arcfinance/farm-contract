@@ -1,1 +1,1 @@
-# ButterFly Mining
+# ARC Mining
