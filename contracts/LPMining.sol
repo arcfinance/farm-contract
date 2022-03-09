@@ -267,8 +267,6 @@ contract LPMining is Ownable {
      * @dev Deposit LP tokens to LPMining for bfly allocation.
      */
     function deposit(uint256 _pid, uint256 _amount) public {
-        require (_pid != 0, 'BFLY: INVALID_POOL');
-
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][msg.sender];
         updatePool(_pid);
@@ -290,8 +288,6 @@ contract LPMining is Ownable {
      * @dev Withdraw LP tokens from MasterChef.
      */
     function withdraw(uint256 _pid, uint256 _amount) public {
-        require (_pid != 0, 'BFLY: INVALID_POOL');
-
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][msg.sender];
         require(user.amount >= _amount, "BFLY: SUFFICIENT_BALANCE");

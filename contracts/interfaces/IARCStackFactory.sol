@@ -17,7 +17,5 @@ interface IARCStackFactory {
         address _admin
     ) external;
 
-    event NewPool(address indexed _address);
-    event AddPool(address indexed _address);
-    event RemovePool(address indexed _address);
+    event NewPool(address indexed newAddress, address indexed stackToken, address indexed rewardToken, uint256 rewardPerBlock, uint256 startBlock, uint256 bonusEndBlock);
 }

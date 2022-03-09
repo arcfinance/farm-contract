@@ -14,10 +14,6 @@ contract StackMiningFactory is Ownable, IARCStackFactory {
      */
     mapping(address => bool) public pools;
     
-    constructor() {
-        //do nothing
-    }
-
     /**
      * @dev Add new pool to factory
      *
@@ -44,15 +40,17 @@ contract StackMiningFactory is Ownable, IARCStackFactory {
         require(_rewardToken.totalSupply() >= 0);
         require(_stakedToken != _rewardToken, "Tokens must be different");
 
+        // create contract
         bytes memory bytecode = type(StackMining).creationCode;
         bytes32 salt = keccak256(abi.encodePacked(_stakedToken, _rewardToken, _startBlock));
-        address smartChefAddress;
-
+        address stackAddress;
         assembly {
-            smartChefAddress := create2(0, add(bytecode, 32), mload(bytecode), salt)
+            stackAddress := create2(0, add(bytecode, 32), mload(bytecode), salt)
         }
 
-        StackMining(smartChefAddress).initialize(
+        require(!pools[stackAddress], "this stack pool is create");
+        // init contract
+        StackMining(stackAddress).initialize(
             _stakedToken,
             _rewardToken,
             _rewardPerBlock,
@@ -62,29 +60,7 @@ contract StackMiningFactory is Ownable, IARCStackFactory {
             _admin
         );
 
-        addPool(smartChefAddress);
-
-        emit NewPool(smartChefAddress);
-    }
-
-    function addPool(address _address) internal {
-        require(_address != address(0), "BFLY: INVALID_ADDR");
-        if (!pools[_address]) {
-            pools[_address] = true;
-        }
-
-        emit AddPool(_address);
-    }
-
-    /**
-     * @dev Remove pool from factory
-     *
-     * Emits an {RemovePool} event indicating remove contract from address list
-     */
-    function removePool(address _address) public onlyOwner {
-        require(pools[_address], "BFLY: POOL_NOT_EXISTS");
-        delete pools[_address];
-
-        emit RemovePool(_address);
+        pools[stackAddress] = true;
+        emit NewPool(stackAddress, address(_stakedToken), address(_rewardToken), _rewardPerBlock, _startBlock, _bonusEndBlock);
     }
 }
