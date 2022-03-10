@@ -27,13 +27,13 @@ contract LPMining is Ownable {
      * Info of each user.
      *
      *
-     * We do some fancy math here. Basically, any point in time, the amount of BFLYs
+     * We do some fancy math here. Basically, any point in time, the amount of ARCs
      * entitled to a user but is pending to be distributed is:
      *
-     *   pending reward = (user.amount * pool.accBflyPerShare) - user.rewardDebt
+     *   pending reward = (user.amount * pool.accARCPerShare) - user.rewardDebt
      *
      * Whenever a user deposits or withdraws LP tokens to a pool. Here's what happens:
-     *   1. The pool's `accBflyPerShare` (and `lastRewardBlock`) gets updated.
+     *   1. The pool's `accARCPerShare` (and `lastRewardBlock`) gets updated.
      *   2. User receives the pending reward sent to his/her address.
      *   3. User's `amount` gets updated.
      *   4. User's `rewardDebt` gets updated.
@@ -48,9 +48,9 @@ contract LPMining is Ownable {
      */
     struct PoolInfo {
         IBEP20 lpToken;           // Address of LP token contract.
-        uint256 allocPoint;       // How many allocation points assigned to this pool. BFLYs to distribute per block.
-        uint256 lastRewardBlock;  // Last block number that BFLYs distribution occurs.
-        uint256 accARCPerShare; // Accumulated BFLYs per share, times 1e12. See below.
+        uint256 allocPoint;       // How many allocation points assigned to this pool. ARCs to distribute per block.
+        uint256 lastRewardBlock;  // Last block number that ARCs distribution occurs.
+        uint256 accARCPerShare; // Accumulated ARCs per share, times 1e12. See below.
     }
 
     /**
@@ -157,7 +157,7 @@ contract LPMining is Ownable {
     }
 
     /**
-     * @dev Update the given pool's BFLY allocation point. Can only be called by the owner.
+     * @dev Update the given pool's ARC allocation point. Can only be called by the owner.
      */
     function set(uint256 _pid, uint256 _allocPoint, bool _withUpdate) public onlyOwner {
         if (_withUpdate) {
@@ -199,13 +199,13 @@ contract LPMining is Ownable {
      * We trust that migrator contract is good.
      */
     function migrate(uint256 _pid) public {
-        require(address(migrator) != address(0), "BFLY: NO_MIGRATOR");
+        require(address(migrator) != address(0), "ARC: NO_MIGRATOR");
         PoolInfo storage pool = poolInfo[_pid];
         IBEP20 lpToken = pool.lpToken;
         uint256 bal = lpToken.balanceOf(address(this));
         lpToken.safeApprove(address(migrator), bal);
         IBEP20 newLpToken = migrator.migrate(lpToken);
-        require(bal == newLpToken.balanceOf(address(this)), "BFLY: BAD");
+        require(bal == newLpToken.balanceOf(address(this)), "ARC: BAD");
         pool.lpToken = newLpToken;
     }
 
@@ -258,13 +258,12 @@ contract LPMining is Ownable {
         uint256 multiplier = getMultiplier(pool.lastRewardBlock, block.number);
         uint256 reward = multiplier.mul(arcPerBlock).mul(pool.allocPoint).div(totalAllocPoint);
         arc.safeTransfer(devaddr, reward.div(5));    // dev reward
-        // arc.safeTransfer(address(this), reward);     // TODO: have no syrup! 
         pool.accARCPerShare = pool.accARCPerShare.add(reward.mul(1e12).div(lpSupply));
         pool.lastRewardBlock = block.number;
     }
 
     /**
-     * @dev Deposit LP tokens to LPMining for bfly allocation.
+     * @dev Deposit LP tokens to LPMining for ARC allocation.
      */
     function deposit(uint256 _pid, uint256 _amount) public {
         PoolInfo storage pool = poolInfo[_pid];
@@ -290,7 +289,7 @@ contract LPMining is Ownable {
     function withdraw(uint256 _pid, uint256 _amount) public {
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][msg.sender];
-        require(user.amount >= _amount, "BFLY: SUFFICIENT_BALANCE");
+        require(user.amount >= _amount, "ARC: SUFFICIENT_BALANCE");
         updatePool(_pid);
         uint256 pending = user.amount.mul(pool.accARCPerShare).div(1e12).sub(user.rewardDebt);
         if(pending > 0) {
@@ -320,7 +319,7 @@ contract LPMining is Ownable {
      * @dev Update dev address by the previous dev.
      */
     function setDev(address _devaddr) public {
-        require(msg.sender == devaddr, "BFLY: NO_PERMISSION");
+        require(msg.sender == devaddr, "ARC: NO_PERMISSION");
         devaddr = _devaddr;
     }
 

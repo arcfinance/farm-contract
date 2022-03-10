@@ -107,8 +107,8 @@ contract StackMining is IARCStack, Ownable, ReentrancyGuard {
         uint256 _poolLimitPerUser,
         address _admin
     ) external {
-        require(!isInitialized, "BFLY: ALREADY_INIT");
-        require(msg.sender == SMART_CHEF_FACTORY, "BFLY: NOT_FACTORY");
+        require(!isInitialized, "ARC: ALREADY_INIT");
+        require(msg.sender == SMART_CHEF_FACTORY, "ARC: NOT_FACTORY");
 
         // Make this contract initialized
         isInitialized = true;
@@ -125,7 +125,7 @@ contract StackMining is IARCStack, Ownable, ReentrancyGuard {
         }
 
         uint256 decimalsRewardToken = uint256(rewardToken.decimals());
-        require(decimalsRewardToken < 30, "BFLY: Must be inferior to 30");
+        require(decimalsRewardToken < 30, "ARC: Must be inferior to 30");
 
         PRECISION_FACTOR = uint256(10**(uint256(30).sub(decimalsRewardToken)));
 
@@ -144,7 +144,7 @@ contract StackMining is IARCStack, Ownable, ReentrancyGuard {
         UserInfo storage user = userInfos[msg.sender];
 
         if (hasUserLimit) {
-            require(_amount.add(user.amount) <= poolLimitPerUser, "BFLY: User amount above limit");
+            require(_amount.add(user.amount) <= poolLimitPerUser, "ARC: User amount above limit");
         }
 
         _updatePool();
@@ -172,7 +172,7 @@ contract StackMining is IARCStack, Ownable, ReentrancyGuard {
      */
     function withdraw(uint256 _amount) external nonReentrant {
         UserInfo storage user = userInfos[msg.sender];
-        require(user.amount >= _amount, "BFLY: Amount to withdraw too high");
+        require(user.amount >= _amount, "ARC: Amount to withdraw too high");
 
         _updatePool();
 

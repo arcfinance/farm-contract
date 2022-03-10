@@ -1,36 +1,48 @@
 {
 	"compiler": {
-		"version": "0.8.11+commit.d7f03943"
+		"version": "0.8.10+commit.fc410830"
 	},
 	"language": "Solidity",
 	"output": {
 		"abi": [
 			{
-				"inputs": [],
-				"stateMutability": "nonpayable",
-				"type": "constructor"
-			},
-			{
 				"anonymous": false,
 				"inputs": [
 					{
 						"indexed": true,
 						"internalType": "address",
-						"name": "_address",
+						"name": "newAddress",
 						"type": "address"
-					}
-				],
-				"name": "AddPool",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
+					},
 					{
 						"indexed": true,
 						"internalType": "address",
-						"name": "_address",
+						"name": "stackToken",
 						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "rewardToken",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "rewardPerBlock",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "startBlock",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "bonusEndBlock",
+						"type": "uint256"
 					}
 				],
 				"name": "NewPool",
@@ -53,19 +65,6 @@
 					}
 				],
 				"name": "OwnershipTransferred",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "_address",
-						"type": "address"
-					}
-				],
-				"name": "RemovePool",
 				"type": "event"
 			},
 			{
@@ -144,19 +143,6 @@
 				"type": "function"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "_address",
-						"type": "address"
-					}
-				],
-				"name": "removePool",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
 				"inputs": [],
 				"name": "renounceOwnership",
 				"outputs": [],
@@ -194,9 +180,6 @@
 				},
 				"owner()": {
 					"details": "Returns the address of the current owner."
-				},
-				"removePool(address)": {
-					"details": "Remove pool from factory Emits an {RemovePool} event indicating remove contract from address list"
 				},
 				"renounceOwnership()": {
 					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
@@ -283,19 +266,19 @@
 			]
 		},
 		"farm-contract/contracts/StackMiningFactory.sol": {
-			"keccak256": "0xb0ba1961136db53ad2fa9eee54945833fef77e91ef84f2f58ac914ea7dacb268",
+			"keccak256": "0x61d19ec0975cb210be6a263b424f7e316e31b8888f4ab1de408df8a1a01a2efb",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ceeee0fac1519fdbaecd303e41cc2dcf2c4bd75b5538d145580eb12eb74edada",
-				"dweb:/ipfs/QmVmkmFiyAGYek4rVBqTBaiAbKksWAihue9T4iHJMwWjHD"
+				"bzz-raw://fb4c9aeea0d8b8012e587f7de74e862beaf9aff0cb8853456748de76a42be826",
+				"dweb:/ipfs/QmdmqPpcgnKQr4oTiFnSW6VmpRSF74Cmck9wwuWrB2rGJ4"
 			]
 		},
 		"farm-contract/contracts/interfaces/IARCStackFactory.sol": {
-			"keccak256": "0xa2b59d1cbbd3b6e659692c56f0d953f63568f6a06910ac381b1c3d7598cba9c9",
+			"keccak256": "0xa8ad48c2d5b6551aa4420d38e653cb9c8d6fd17488cbb1ca64b41ba4156491ed",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://aca6f8d8e293d175beba66762accfd63cdad3df36ab897847baac2aab7c69850",
-				"dweb:/ipfs/Qme918iziWgLsabwLEcfM1XXzBo7W3tYYq2zwnwZQXk7hJ"
+				"bzz-raw://7d6665ffcdb9938dcef279d7887dbc313a58b911e4290895314b38b5c39c4d29",
+				"dweb:/ipfs/QmcJ8XhJBnLJDx5pVD6bDk7UHTxdnQZW74T5CNdrKvJ1vZ"
 			]
 		},
 		"farm-contract/contracts/interfaces/IARCStackMining.sol": {
