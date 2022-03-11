@@ -20,8 +20,8 @@ interface IARCStack {
         uint256 _rewardPerBlock,
         uint256 _startBlock,
         uint256 _bonusEndBlock,
-        uint256 _poolLimitPerUser,
-        address _admin
+        uint256 _poolLimitPerUser
+        // address _admin
     ) external;
 
     function deposit(uint256 _amount) external;

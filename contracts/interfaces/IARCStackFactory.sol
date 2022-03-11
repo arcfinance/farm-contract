@@ -13,8 +13,7 @@ interface IARCStackFactory {
         uint256 _rewardPerBlock,
         uint256 _startBlock,
         uint256 _bonusEndBlock,
-        uint256 _poolLimitPerUser,
-        address _admin
+        uint256 _poolLimitPerUser
     ) external;
 
     event NewPool(address indexed newAddress, address indexed stackToken, address indexed rewardToken, uint256 rewardPerBlock, uint256 startBlock, uint256 bonusEndBlock);

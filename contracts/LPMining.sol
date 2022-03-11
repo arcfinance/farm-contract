@@ -101,6 +101,7 @@ contract LPMining is Ownable {
     event Deposit(address indexed user, uint256 indexed pid, uint256 amount);
     event Withdraw(address indexed user, uint256 indexed pid, uint256 amount);
     event EmergencyWithdraw(address indexed user, uint256 indexed pid, uint256 amount);
+    event Add(uint256 indexed pid);
 
     constructor(
         IBEP20 _arc,
@@ -154,6 +155,7 @@ contract LPMining is Ownable {
             accARCPerShare: 0
         }));
         updateStakingPool();
+        emit Add(poolInfo.length - 1);
     }
 
     /**

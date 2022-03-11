@@ -13,6 +13,7 @@ contract StackMiningFactory is Ownable, IARCStackFactory {
      * @dev All pools
      */
     mapping(address => bool) public pools;
+
     
     /**
      * @dev Add new pool to factory
@@ -23,7 +24,7 @@ contract StackMiningFactory is Ownable, IARCStackFactory {
      * @param _startBlock: start block
      * @param _bonusEndBlock: end block
      * @param _poolLimitPerUser: pool limit per user in stakedToken (if any, else 0)
-     * @param _admin: admin address with ownership
+     * 
      *
      * Emits an {NewPool} event indicating create new stacking pool
      */
@@ -33,8 +34,7 @@ contract StackMiningFactory is Ownable, IARCStackFactory {
         uint256 _rewardPerBlock,
         uint256 _startBlock,
         uint256 _bonusEndBlock,
-        uint256 _poolLimitPerUser,
-        address _admin
+        uint256 _poolLimitPerUser
     ) external onlyOwner {
         require(_stakedToken.totalSupply() >= 0);
         require(_rewardToken.totalSupply() >= 0);
@@ -56,8 +56,7 @@ contract StackMiningFactory is Ownable, IARCStackFactory {
             _rewardPerBlock,
             _startBlock,
             _bonusEndBlock,
-            _poolLimitPerUser,
-            _admin
+            _poolLimitPerUser
         );
 
         pools[stackAddress] = true;

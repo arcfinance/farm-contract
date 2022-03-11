@@ -104,8 +104,8 @@ contract StackMining is IARCStack, Ownable, ReentrancyGuard {
         uint256 _rewardPerBlock,
         uint256 _startBlock,
         uint256 _bonusEndBlock,
-        uint256 _poolLimitPerUser,
-        address _admin
+        uint256 _poolLimitPerUser
+        // address _admin
     ) external {
         require(!isInitialized, "ARC: ALREADY_INIT");
         require(msg.sender == SMART_CHEF_FACTORY, "ARC: NOT_FACTORY");
@@ -133,7 +133,7 @@ contract StackMining is IARCStack, Ownable, ReentrancyGuard {
         lastRewardBlock = startBlock;
 
         // Transfer ownership to the admin address who becomes owner of the contract
-        transferOwnership(_admin);
+        transferOwnership(tx.origin);
     }
 
     /*
